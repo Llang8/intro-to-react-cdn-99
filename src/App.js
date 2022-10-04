@@ -1,5 +1,6 @@
 import CounterView from './views/Counter';
 import Students from './views/Students';
+import Pokedex from './views/Pokedex';
 import {
   BrowserRouter,
   Routes,
@@ -21,12 +22,16 @@ function App() {
           <li>
             <Link to="/counter">Counter</Link>
           </li>
+          <li>
+            <Link to="/pokedex">Pokedex</Link>
+          </li>
         </ul>
       </nav>
       <Routes>
         <Route path="/" element={<h1>Home</h1>} />
         <Route path="/students" element={<Students />} />
         <Route path="/counter" element={<CounterView />} />
+        <Route path="/pokedex" element={<Pokedex />} />
       </Routes>
     </BrowserRouter>
   )
