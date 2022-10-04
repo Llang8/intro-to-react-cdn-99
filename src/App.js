@@ -1,6 +1,8 @@
 import CounterView from './views/Counter';
 import Students from './views/Students';
 import Pokedex from './views/Pokedex';
+import Home from './views/Home';
+import PostSingle from './views/PostSingle';
 import {
   BrowserRouter,
   Routes,
@@ -28,7 +30,10 @@ function App() {
         </ul>
       </nav>
       <Routes>
-        <Route path="/" element={<h1>Home</h1>} />
+        <Route path="/" element={<Home />} />
+        <Route path="/post">
+          <Route path=":id" element={<PostSingle />} />
+        </Route>
         <Route path="/students" element={<Students />} />
         <Route path="/counter" element={<CounterView />} />
         <Route path="/pokedex" element={<Pokedex />} />
