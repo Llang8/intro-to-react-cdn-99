@@ -23,9 +23,19 @@ export const DataProvider = function(props) {
             })
     }
 
+    const getPokemon = function(pokemonId, callback) {
+        fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonId}/`)
+            .then((res) => res.json())
+            .then((data) => {
+                callback(data)
+                console.log(data)
+            })
+    }
+
     const value = {
         posts: posts,
-        getPost: getPost
+        getPost: getPost,
+        getPokemon: getPokemon
     }
 
     return (

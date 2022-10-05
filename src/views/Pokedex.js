@@ -1,18 +1,17 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
+import { DataContext } from '../contexts/DataProvider';
 
 export default function Pokedex() {
     const [pokemon, setPokemon] = useState({})
     const [pokemonState, setPokemonState] = useState("LOADING")
     const [pokemonId, setPokemonId] = useState(1)
+    const { getPokemon } = useContext(DataContext)
 
     useEffect(() => {
-        fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonId}/`)
-            .then((res) => res.json())
-            .then((data) => {
-                setPokemon(data)
-                setPokemonState("LOADED")
-                console.log(data)
-            })
+        getPokemon(pokemonId, function(data) {
+            setPokemon(data)
+            setPokemonState("LOADED")
+        })
         console.log('FETCHING')
     }, [pokemonId])
 
