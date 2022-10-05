@@ -1,18 +1,15 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import Post from '../components/Post';
+import { DataContext } from '../contexts/DataProvider';
 
 export default function PostSingle() {
     const [post, setPost] = useState({})
     const { id } = useParams()
+    const { getPost } = useContext(DataContext)
 
     useEffect(() => {
-        fetch(`http://127.0.0.1:5000/api/post/${id}`)
-            .then((res) => res.json())
-            .then((data) => {
-                setPost(data)
-                console.log(data)
-            })
+        getPost(id, setPost)
     }, [])
 
     return (
