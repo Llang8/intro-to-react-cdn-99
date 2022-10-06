@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext, createContext } from 'react'
-import { getFirestore, getDoc, getDocs, collection, doc } from '@firebase/firestore'
+import { getFirestore, getDoc, getDocs, collection, doc, addDoc } from '@firebase/firestore'
 
 export const DataContext = createContext()
 
@@ -51,6 +51,26 @@ export const DataProvider = function(props) {
         callback(post)
     }
 
+    const addPost = async function(title, body) {
+        const post = {
+            title: title,
+            body: body
+        }
+
+        const collectionRef = collection(db, 'posts')
+        const docRef = await addDoc(collectionRef, post)
+    }
+
+    const addStudent = async function(title, body) {
+        const post = {
+            title: title,
+            body: body
+        }
+
+        const collectionRef = collection(db, 'students')
+        const docRef = await addDoc(collectionRef, post)
+    }
+
     /* const getPokemon = function(pokemonId, callback) {
         fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonId}/`)
             .then((res) => res.json())
@@ -70,7 +90,8 @@ export const DataProvider = function(props) {
     const value = {
         posts: posts,
         getPost: getPost,
-        getPokemon: getPokemon
+        getPokemon: getPokemon,
+        addPost: addPost
     }
 
     return (
