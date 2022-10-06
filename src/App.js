@@ -8,7 +8,7 @@ import { AuthContext } from './contexts/AuthProvider';
 import { useContext } from 'react';
 
 function App() {
-    const { login, logout } = useContext(AuthContext)
+    const { login, logout, user } = useContext(AuthContext)
 
     return (
         <BrowserRouter>
@@ -35,8 +35,12 @@ function App() {
                         <Link className="nav-link" to="/pokedex">Pokedex</Link>
                     </div>
                     <div className="navbar-nav ml-auto">
-                        <button onClick={login} className="btn btn-primary">Login</button>
-                        <button onClick={logout} className="btn btn-primary">Logout</button>
+                        {
+                            (user.loggedIn) ?
+                            <button onClick={logout} className="btn btn-primary">Logout</button>
+                            :
+                            <button onClick={login} className="btn btn-primary">Login</button>
+                        }
                     </div>
                 </div>
             </nav>

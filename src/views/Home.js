@@ -11,11 +11,15 @@ export default function Home() {
             <h1>Home</h1>
             {
                 (user.loggedIn) ?
-                <p>Welcome, { user.username }</p>
+                (
+                    <>
+                        <p>Welcome, { user.username }</p>
+                        <PostForm />
+                    </>
+                )
                 :
                 ''
             }
-            <PostForm />
             <PostList />
         </div>
     )

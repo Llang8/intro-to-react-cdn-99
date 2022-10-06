@@ -1,10 +1,12 @@
 import { useState, useEffect, useContext, createContext } from 'react'
-import { getFirestore, getDoc, getDocs, collection, doc, addDoc, Timestamp, query, orderBy } from '@firebase/firestore'
+import { getFirestore, getDoc, getDocs, collection, collectionGroup, doc, addDoc, Timestamp, query, orderBy } from '@firebase/firestore'
+import { AuthContext } from './AuthProvider'
 
 export const DataContext = createContext()
 
 export const DataProvider = function(props) {
     const [posts, setPosts] = useState([])
+    const { user } = useContext(AuthContext)
     const db = getFirestore()
 
     useEffect(() => {
@@ -15,7 +17,7 @@ export const DataProvider = function(props) {
                 console.log(data)
             }) */
         const getPosts = async function() {
-            const collectionRef = collection(db, 'posts')
+            const collectionRef = collectionGroup(db, 'posts')
             // const collectionSnap = await getDocs(collectionRef)
             const q = query(collectionRef, orderBy('dateCreated', 'desc'))
             const collectionSnap = await getDocs(q)
@@ -33,7 +35,7 @@ export const DataProvider = function(props) {
             setPosts(postsArr)
         }
         getPosts()
-    }, [])
+    }, [user])
 
     const getPost = async function(id, callback) {
         /* fetch(`http://127.0.0.1:5000/api/post/${id}`)
@@ -60,7 +62,7 @@ export const DataProvider = function(props) {
             dateCreated: Timestamp.now()
         }
 
-        const collectionRef = collection(db, 'posts')
+        const collectionRef = collection(db, 'users', user.uid, 'posts')
         const docRef = await addDoc(collectionRef, post)
 
         post.id = docRef.id
