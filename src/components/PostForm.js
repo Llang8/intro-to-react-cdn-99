@@ -11,6 +11,7 @@ export default function PostForm() {
         const title = formData.get('title')
         const body = formData.get('body')
         addPost(title, body)
+        event.target.reset()
     }
 
     return (

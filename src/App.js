@@ -4,8 +4,12 @@ import Pokedex from "./views/Pokedex";
 import Home from "./views/Home";
 import PostSingle from "./views/PostSingle";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import { AuthContext } from './contexts/AuthProvider';
+import { useContext } from 'react';
 
 function App() {
+    const { login, logout } = useContext(AuthContext)
+
     return (
         <BrowserRouter>
             <nav className="navbar navbar-expand-lg navbar-dark bg-dark mb-5">
@@ -29,6 +33,10 @@ function App() {
                         <Link className="nav-link" to="/students">Students</Link>
                         <Link className="nav-link" to="/counter">Counter</Link>
                         <Link className="nav-link" to="/pokedex">Pokedex</Link>
+                    </div>
+                    <div className="navbar-nav ml-auto">
+                        <button onClick={login} className="btn btn-primary">Login</button>
+                        <button onClick={logout} className="btn btn-primary">Logout</button>
                     </div>
                 </div>
             </nav>

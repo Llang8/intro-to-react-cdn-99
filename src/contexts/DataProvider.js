@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext, createContext } from 'react'
-import { getFirestore, getDoc, getDocs, collection, doc, addDoc } from '@firebase/firestore'
+import { getFirestore, getDoc, getDocs, collection, doc, addDoc, Timestamp, query, orderBy } from '@firebase/firestore'
 
 export const DataContext = createContext()
 
@@ -16,7 +16,9 @@ export const DataProvider = function(props) {
             }) */
         const getPosts = async function() {
             const collectionRef = collection(db, 'posts')
-            const collectionSnap = await getDocs(collectionRef)
+            // const collectionSnap = await getDocs(collectionRef)
+            const q = query(collectionRef, orderBy('dateCreated', 'desc'))
+            const collectionSnap = await getDocs(q)
 
             const postsArr = []
 
@@ -54,21 +56,16 @@ export const DataProvider = function(props) {
     const addPost = async function(title, body) {
         const post = {
             title: title,
-            body: body
+            body: body,
+            dateCreated: Timestamp.now()
         }
 
         const collectionRef = collection(db, 'posts')
         const docRef = await addDoc(collectionRef, post)
-    }
 
-    const addStudent = async function(title, body) {
-        const post = {
-            title: title,
-            body: body
-        }
+        post.id = docRef.id
 
-        const collectionRef = collection(db, 'students')
-        const docRef = await addDoc(collectionRef, post)
+        setPosts([post, ...posts])
     }
 
     /* const getPokemon = function(pokemonId, callback) {
