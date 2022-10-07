@@ -5,11 +5,11 @@ import { DataContext } from '../contexts/DataProvider';
 
 export default function PostSingle() {
     const [post, setPost] = useState({})
-    const { id } = useParams()
+    const { uid, id } = useParams()
     const { getPost } = useContext(DataContext)
 
     useEffect(() => {
-        getPost(id, setPost)
+        getPost(uid, id, setPost)
     }, [])
 
     return (

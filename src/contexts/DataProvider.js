@@ -28,7 +28,8 @@ export const DataProvider = function(props) {
                 console.log(doc.id, " => ", doc.data());
                 postsArr.push({
                     ...doc.data(),
-                    id: doc.id
+                    id: doc.id,
+                    uid: doc.ref.parent.parent.id // Move up the firestore tree to find the user grandparent id
                 })
             })
 
@@ -37,14 +38,14 @@ export const DataProvider = function(props) {
         getPosts()
     }, [user])
 
-    const getPost = async function(id, callback) {
+    const getPost = async function(uid, id, callback) {
         /* fetch(`http://127.0.0.1:5000/api/post/${id}`)
             .then((res) => res.json())
             .then((data) => {
                 callback(data)
                 console.log(data)
             }) */
-        const docRef = doc(db, "posts", id)
+        const docRef = doc(db, "users", uid, "posts", id)
         const docSnap = await getDoc(docRef)
 
         const post = {

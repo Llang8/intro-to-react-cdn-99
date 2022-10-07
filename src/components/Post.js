@@ -11,7 +11,7 @@ export default function Post(props) {
                         <h2>{ props.post.title }</h2>
                     )
                     :
-                    <Link to={`/post/${props.post.id}`}>{ props.post.title }</Link>
+                    <Link to={`/post/${props.post.uid}/${props.post.id}`}>{ props.post.title }</Link>
                 }
             </div>
             {
